@@ -3,20 +3,20 @@
 
 module synchronizer #(parameter INPUT_SIZE = 4)(
     input logic                         clk, reset,
-    input logic     [INPUT_SIZE-1:0]    d,
+    input logic     [INPUT_SIZE-1:0]    d_in,
     output logic    [INPUT_SIZE-1:0]    d_out
     );
     logic [INPUT_SIZE-1 : 0]    d_mid;
 
     always_ff @(posedge clk)
-        if (~reset):
+        if (~reset)
             begin
                 d_mid <= 0;
                 d_out <= 0;
             end
-        else:
+        else
             begin
-                d_mid <= d;
+                d_mid <= d_in;
                 d_out <= d_mid;
             end
 

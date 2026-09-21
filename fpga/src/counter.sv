@@ -23,7 +23,7 @@ module counter #(parameter COUNTER_SIZE = 25, MAX_THRESHOLD = 24'd10000000)(
 					end
 				else
 					begin
-						counter <= counter + 1;
+						counter <= counter + 1'b1;
 						slow_clk <= slow_clk;
 					end
 	

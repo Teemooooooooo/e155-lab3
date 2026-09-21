@@ -10,9 +10,9 @@ module debounce_fsm(
     statetype state, nextstate;
 
     logic [19:0] counter;
-    logic slow_clock, counter, counter_enable, counter_reset;
+    logic slow_clk, counter_enable, counter_reset;
     
-    counter #(20,524288) counter(.clk, .reset(~counter[19]), .slow_clk, .enable(counter_enable), .counter); 
+    counter #(20,524289) counter_debounce(.clk, .reset(~(counter[19] | ~reset | (state == IDLE))), .slow_clk, .enable(counter_enable), .counter); 
 
 
     always_ff @(posedge clk)
@@ -22,11 +22,12 @@ module debounce_fsm(
     // next state logic 
     always_comb
         case (state)
-            IDLE:       nextstate = (c == 4'b1111) ? WAIT : IDLE; // stay at IDLE if c all high
+            IDLE:       nextstate = (c == 4'b1111) ? IDLE : WAIT; // stay at IDLE if c all high
             WAIT:       if (c == 4'b1111)                nextstate  = IDLE; // bounce, go bacck to 0
                         else if (counter[19]) nextstate = PRESSED; 
                         else                  nextstate = WAIT;
-            PRESSED:    nextstate = (c == 4'b1111) ? PRESSED : IDLE; 
+            PRESSED:    nextstate = (c == 4'b1111) ? IDLE : PRESSED; 
+			default:    nextstate = IDLE;
         endcase
     assign d_en = (state == PRESSED);
     assign counter_enable = (state == WAIT);

@@ -18,6 +18,7 @@ module main_fsm(
             PRESS: nextstate = HOLD;
             HOLD:   if (~press)         nextstate = SCAN;
                     else                nextstate = HOLD;
+			default: nextstate = SCAN;
         endcase
 
     assign update = (state == PRESS);
