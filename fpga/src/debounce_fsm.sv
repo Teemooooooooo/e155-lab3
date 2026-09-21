@@ -3,6 +3,7 @@
 
 module debounce_fsm(
     input  logic            clk, reset,
+    input  logic [15:0]     key,
     input  logic [3:0]      c, // active low column reading
     output logic            d_en // debounce wait is done
     );
@@ -22,11 +23,11 @@ module debounce_fsm(
     // next state logic 
     always_comb
         case (state)
-            IDLE:       nextstate = (c == 4'b1111) ? IDLE : WAIT; // stay at IDLE if c all high
-            WAIT:       if (c == 4'b1111)                nextstate  = IDLE; // bounce, go bacck to 0
+            IDLE:       nextstate = (key == 16'b0000000000000000) ? IDLE : WAIT; // stay at IDLE if c all high
+            WAIT:       if (key == 16'b0000000000000000)                nextstate  = IDLE; // bounce, go bacck to 0
                         else if (counter[19]) nextstate = PRESSED; 
                         else                  nextstate = WAIT;
-            PRESSED:    nextstate = (c == 4'b1111) ? IDLE : PRESSED; 
+            PRESSED:    nextstate = (key == 16'b0000000000000000) ? IDLE : PRESSED; 
 			default:    nextstate = IDLE;
         endcase
     assign d_en = (state == PRESSED);

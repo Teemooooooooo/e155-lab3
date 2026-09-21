@@ -11,15 +11,16 @@ module lab3_ey(
     logic       int_osc, digit_select, press, update, d_en;
     logic [3:0] s_next, s0, s1, r_sync, c_sync, s;
     logic [15:0]    digit_counter;
+    logic [15:0]    key;
     // generating 48MHz clock
     HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));	
 
     synchronizer synchronizer_row(.clk(int_osc), .reset, .d_in(scan_out), .d_out(r_sync));
     synchronizer synchronizer_col(.clk(int_osc), .reset, .d_in(c), .d_out(c_sync));
     main_fsm main_fsm(.clk(int_osc), .reset, .d_en, .press, .update);
-    debounce_fsm debounce_fsm(.clk(int_osc), .reset, .c(c_sync), .d_en);
+    debounce_fsm debounce_fsm(.clk(int_osc), .reset, .c(c_sync), .d_en, .key);
 
-    row_col_to_binary row_col_to_binary(.clk(int_osc), .reset, .c_sync, .r_sync, .press, .s_next);
+    row_col_to_binary row_col_to_binary(.clk(int_osc), .reset, .c_sync, .r_sync, .press, .s_next, .key);
     sev_seg_input sev_seg_input(.clk(int_osc), .update, .s_next, .s0, .s1, .reset);
 
 

@@ -4,9 +4,9 @@ module row_col_to_binary(
     input  logic         clk, reset,
     input  logic [3:0]   c_sync, r_sync,
     output logic         press,
-    output logic [3:0]   s_next
+    output logic [3:0]   s_next,
+    output logic [15:0]  key
     );
-    logic [15:0] key;
 
     enable_flop flop_R0(.clk, .reset, .enable(r_sync[0]), .d_in(~c_sync), .d_out({key[10],key[3:1]}));
     enable_flop flop_R1(.clk, .reset, .enable(r_sync[1]), .d_in(~c_sync), .d_out({key[11],key[6:4]}));
