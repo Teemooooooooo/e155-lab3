@@ -7,10 +7,10 @@ module scanning(
 );
     logic [24:0] count;
     logic  slow_clk;
-    counter #(25, 24000000) scan_counter(.clk, .reset, .slow_clk, .enable, .counter(count)); 
+    counter #(25, 320000) scan_counter(.clk, .reset, .slow_clk, .enable, .counter(count)); 
 
-    assign scan_out[0] = (count < 25'd6000000);
-    assign scan_out[1] = ((25'd6000000 <= count) & (count < 25'd12000000));
-    assign scan_out[2] = ((25'd12000000 <= count) & (count < 25'd18000000));
-    assign scan_out[3] = ((25'd18000000 <= count) & (count <= 25'd24000000));
+    assign scan_out[0] = (count < 25'd80000);
+    assign scan_out[1] = ((25'd80000 <= count) & (count < 25'd160000));
+    assign scan_out[2] = ((25'd160000 <= count) & (count < 25'd240000));
+    assign scan_out[3] = ((25'd240000 <= count) & (count <= 25'd320000));
 endmodule

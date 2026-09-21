@@ -12,7 +12,7 @@ module debounce_fsm(
     logic [19:0] counter;
     logic slow_clock, counter, counter_enable, counter_reset;
     
-    counter #(20,524288) counter(.clk, .reset(counter_reset), .slow_clk, .enable(counter_enable), .counter); 
+    counter #(20,524288) counter(.clk, .reset(~counter[19]), .slow_clk, .enable(counter_enable), .counter); 
 
 
     always_ff @(posedge clk)
