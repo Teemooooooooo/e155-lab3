@@ -4,17 +4,28 @@
 module sev_seg_input(
     input  logic          clk, update, reset,
     input  logic  [3:0]   s_next, // the incoming number that needs to be displayed
-    output logic  [3:0]   s0, s1 //binary representation of the displayed number    
+    output logic  [3:0]   s0, s1, s_mid, //binary representation of the displayed number    
+	output logic move
     );
+	// logic [3:0] s_mid;
 
+	always_ff @(posedge clk)
+		if (~reset) begin s_mid <= ~4'b0; end
+		else
+				begin
+					s_mid <= s_next;
+				end
+				
+				
     always_ff @(posedge clk)
         if (~reset) begin s0 <= ~4'b0; s1 <= ~4'b0; end
 		else
 			if (update)
 				begin
-					s0 <= s_next;
+					s0 <= s_mid;
 					s1 <= s0;
 				end
 
-
+	assign move = ~(s_next == 4'b0000);
+	
 endmodule

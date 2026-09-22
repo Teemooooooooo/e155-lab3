@@ -7,11 +7,17 @@ module row_col_to_binary(
     output logic [3:0]   s_next,
     output logic [15:0]  key
     );
+	logic [16:0] sad_count;
+	logic read, slow_clk;
+	
+    enable_flop flop_R0(.clk, .reset, .enable(r_sync[0] & read), .d_in(~c_sync), .d_out({key[10],key[3:1]}));
+    enable_flop flop_R1(.clk, .reset, .enable(r_sync[1] & read), .d_in(~c_sync), .d_out({key[11],key[6:4]}));
+    enable_flop flop_R2(.clk, .reset, .enable(r_sync[2] & read), .d_in(~c_sync), .d_out({key[12],key[9:7]}));
+    enable_flop flop_R3(.clk, .reset, .enable(r_sync[3] & read), .d_in(~c_sync), .d_out({key[13],key[14],key[0],key[15]}));
 
-    enable_flop flop_R0(.clk, .reset, .enable(r_sync[0]), .d_in(~c_sync), .d_out({key[10],key[3:1]}));
-    enable_flop flop_R1(.clk, .reset, .enable(r_sync[1]), .d_in(~c_sync), .d_out({key[11],key[6:4]}));
-    enable_flop flop_R2(.clk, .reset, .enable(r_sync[2]), .d_in(~c_sync), .d_out({key[12],key[9:7]}));
-    enable_flop flop_R3(.clk, .reset, .enable(r_sync[3]), .d_in(~c_sync), .d_out({key[13],key[14],key[0],key[15]}));
+	counter #(17,80000) counter_sad(.clk, .reset(reset), .slow_clk, .enable(1'b1), .counter(sad_count));
+	assign read = (sad_count == 17'd50000);
+
 
     always_comb
     case (key)
