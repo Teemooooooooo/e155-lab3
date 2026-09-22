@@ -1,10 +1,9 @@
 // Ellen Yu ellyu@g.hmc.edu Sep. 18 2026
-// Switch debouncer that removes switch bouncing to produce 
+// Switch debouncer that removes switch bouncing
 
 module debounce_fsm(
     input  logic            clk, reset,
     input  logic [15:0]     key,
-    input  logic [3:0]      c, // active low column reading
     output logic            d_en // debounce wait is done
     );
     typedef enum logic [1:0] {IDLE, WAIT, PRESSED} statetype;
