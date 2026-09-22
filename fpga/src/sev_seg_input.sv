@@ -4,10 +4,9 @@
 module sev_seg_input(
     input  logic          clk, update, reset,
     input  logic  [3:0]   s_next, // the incoming number that needs to be displayed
-    output logic  [3:0]   s0, s1, s_mid, //binary representation of the displayed number    
-	output logic move
+    output logic  [3:0]   s0, s1 //binary representation of the displayed number    
     );
-	// logic [3:0] s_mid;
+	logic [3:0] s_mid;
 
 	// used to delay s_next by one clk cycle so that it comes in at the same time as when update is triggered
 	always_ff @(posedge clk)
