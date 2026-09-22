@@ -1,4 +1,5 @@
-//
+// Ellen Yu ellyu@g.hmc.edu Sep. 22 2026
+// Main finite state machine that controls the update logic
 
 module main_fsm(
     input  logic  clk, reset, d_en, press,

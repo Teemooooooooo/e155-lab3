@@ -1,5 +1,6 @@
 // Ellen Yu ellyu@g.hmc.edu Sep. 10 2026
-// This module that takes in a clk input and outputs a signal at lower frequency
+// This module that takes in a clk input and outputs a signal at lower frequency 
+// also outputs the counter value
 
 module counter #(parameter COUNTER_SIZE = 25, MAX_THRESHOLD = 24'd10000000)(
 	input   logic 		clk, reset, enable,

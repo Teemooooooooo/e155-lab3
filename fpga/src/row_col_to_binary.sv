@@ -1,9 +1,11 @@
-//
+// Ellen Yu ellyu@g.hmc.edu Sep. 22 2026
+// Takes in the syncronized column reading and syncronized row output, 
+// convert input into 16-bit one-hot encodings and valid binary encodings
 
 module row_col_to_binary(
     input  logic         clk, reset,
     input  logic [3:0]   c_sync, r_sync,
-    output logic         press,
+    output logic         press, // exactly one key is pressed
     output logic [3:0]   s_next,
     output logic [15:0]  key
     );

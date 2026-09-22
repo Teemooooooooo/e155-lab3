@@ -1,4 +1,5 @@
-//
+// Ellen Yu ellyu@g.hmc.edu Sep. 22 2026
+// A resetable, enableable, register with parameterized size
 
 module enable_flop #(parameter FLOP_SIZE = 4)(
     input  logic         clk, reset, enable,

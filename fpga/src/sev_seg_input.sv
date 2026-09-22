@@ -9,6 +9,7 @@ module sev_seg_input(
     );
 	// logic [3:0] s_mid;
 
+	// used to delay s_next by one clk cycle so that it comes in at the same time as when update is triggered
 	always_ff @(posedge clk)
 		if (~reset) begin s_mid <= ~4'b0; end
 		else
