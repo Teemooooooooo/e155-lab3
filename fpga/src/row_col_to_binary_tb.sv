@@ -1,3 +1,6 @@
+// Ellen Yu ellyu@g.hmc.edu Sep. 22 2026
+// Testbench for row_col_to_binary module
+
 `timescale 1 ns/1 ns
 
 module row_col_to_binary_tb();

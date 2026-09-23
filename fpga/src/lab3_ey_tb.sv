@@ -1,3 +1,6 @@
+// Ellen Yu ellyu@g.hmc.edu Sep. 22 2026
+// Testbench for top module
+
 `timescale 1 ns/1 ns
 
 module lab3_ey_tb();

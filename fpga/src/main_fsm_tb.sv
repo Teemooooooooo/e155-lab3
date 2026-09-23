@@ -1,4 +1,5 @@
-
+// Ellen Yu ellyu@g.hmc.edu Sep. 22 2026
+// test bench for the main FSM
 
 
 `timescale 1 ns/1 ns
