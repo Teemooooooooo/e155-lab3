@@ -2,9 +2,10 @@
 
 module row_col_to_binary_tb();
   logic           clk;    // system clock
-  logic           reset;  // active high reset
-  logic   [3:0]   c_sync, r_sync, s_next;      // 4-bit input switches
-  logic      	   press;    // 2 output leds
+  logic           reset;  
+  logic   [3:0]   c_sync, r_sync, s_next;     
+  logic      	   press;   
+  logic	  [15:0]   key;
 
 
     row_col_to_binary dut (
@@ -13,7 +14,8 @@ module row_col_to_binary_tb();
         .c_sync,
         .r_sync,
 		.s_next,
-		.press
+		.press,
+		.key
     );
 
   // generate clock
@@ -27,22 +29,47 @@ module row_col_to_binary_tb();
     reset = 0;
     #22 reset = 1;
 
-    // for each test case we setup the inputs, wait for the outputs to update,
-    // and then check that the outputs match what we expect using `assert`
-    // in this case, the leds use combinational logic, so we don't *need* to wait
-    // a full clock cycle (#10)
-
-    // example test 1
-        r_sync = 4'b0001;                // setup inputs
+	
+    
+        r_sync = 4'b0001;                
 		c_sync = 4'b1111;
-        #100;                        // wait required time
-		r_sync = 4'b0001;                // setup inputs
+        #900000;                        
+		
+		assert (key == 16'b0)       // check outputs
+				$display("PASSED! key is at 0");
+			else 
+				$error("FAILED! key = %0b",key); 
+				
+		assert (press == 0)       // check outputs
+				$display("PASSED! press = 0");
+			else 
+				$error("FAILED! press = %0b", press); 
+		
+		r_sync = 4'b0001;                
 		c_sync = 4'b1110;
-        #100;                        // wait required time
+        #900000;       
+		assert (key == 16'b10)       // check outputs
+				$display("PASSED! key is at 1");
+			else 
+				$error("FAILED! key = %0b",key); 
+				
+		assert (press == 1'b1)       // check outputs
+				$display("PASSED! press = 1");
+			else 
+				$error("FAILED! press = %0b", press); 
+
 		r_sync = 4'b0010;
-		c_sync = 4'b1111;
-        
-            
+		c_sync = 4'b1101;
+        #900000;
+        assert (key == 16'b0000000000100010)       // check outputs
+				$display("PASSED! key is at 0");
+			else 
+				$error("FAILED! key = %0b",key); 
+				
+		assert (press == 0)       // check outputs
+				$display("PASSED! press = 0");
+			else 
+				$error("FAILED! press = %0b", press); 
 
 
     #100 $stop;

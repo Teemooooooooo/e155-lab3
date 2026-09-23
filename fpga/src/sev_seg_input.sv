@@ -25,7 +25,5 @@ module sev_seg_input(
 					s0 <= s_mid;
 					s1 <= s0;
 				end
-
-	assign move = ~(s_next == 4'b0000);
 	
 endmodule
